@@ -1,5 +1,8 @@
 #!/bin/bash
 
+function warn() {
+   (>&2 echo $1)
+}
 function die(){
     echo "$1"
     exit 1
@@ -9,5 +12,5 @@ function die(){
 eval "$(rbenv init -)" || die "rbenv failed"
 pip install -r requirements.txt || die "pip install failed"
 mkdocs build --strict || die "mkdocs build failed"
-./htmlproof.sh || die "HTMLProofer failed"
-mkdocs serve
+./htmlproof.sh || warn "HTMLProofer failed"
+mkdocs serve --dev-addr 127.0.0.1:8001
